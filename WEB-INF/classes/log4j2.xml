@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Configuration status="ERROR" DLog4jContextSelector="org.apache.logging.log4j.core.async.AsyncLoggerContextSelector">
+    <Appenders>
+        <!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+        <!--<RandomAccessFile name="RandomAccessFile" fileName="C:\\logs\\clientLogData.log" >-->
+            <!--<PatternLayout>-->
+                <!--<Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>-->
+            <!--</PatternLayout>-->
+        <!--</RandomAccessFile>-->
+        <RollingRandomAccessFile name="RollingRandomAccessFile" fileName="C://logs//app.log"
+        filePattern="C:/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz" immediateFlush="false" append="true">
+        <PatternLayout>
+            <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="5 MB"/>
+        </Policies>
+    </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root level="all" includeLocation="false">
+            <AppenderRef ref="RollingRandomAccessFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script src="http://code.angularjs.org/1.2.0/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="script/errorTracker.js"></script>
+
+
+</head>
+
+<body>
+    <h1>JavaScript logger example.</h1>
+</body>
+    <div>
+        <h2>Configuration example</h2>
+        <span>to add logger to the page add this code</span>
+        <p>
+            &lt;script src="script/errorTracker.js"&gt;&lt;/script&gt;<br/>
+            &lt;script type="text/javascript"&gt;
+            <br/>
+            window.currentLogger = window.errorLogger.init("url to server where you host backend part");<br/>
+            &lt;/script&gt;<br/>
+            then you could use it like <b>window.currentLogger.logInfo(msg)</b> to log some information <br/>
+            or <b>window.currentLogger.logError(err, msg)</b> to log error information. <br/>
+            Except this logger by default listen <b>window.onerror</b> event and log it's info.
+         </p>
+
+        <div>
+            <input type="button" id="btn" value="Press to START generating errors"/> <br/>
+            <input type="button" id="btnStop" value="Press to STOP generating errors"/>
+        </div>
+
+    </div>
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        window.currentLogger = window.errorLogger.init(location.origin);
+        var generator = function(){
+            var msg = "Test error with number" + Math.random();
+            msg += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque et pulvinar ante. Integer malesuada ullamcorper diam sed adipiscing. Nunc varius, mauris ac rutrum convallis, orci tellus vehicula urna, quis mattis eros risus sed purus. Vivamus euismod lectus blandit feugiat aliquet. Vivamus tincidunt eros ut est viverra pharetra et sit amet quam. Nam viverra libero eu imperdiet feugiat. Quisque ut iaculis elit, ac auctor metus."+
+
+            "Sed id arcu laoreet, facilisis nulla a, elementum nibh. In tempor orci risus, sit amet viverra odio mattis vitae. Etiam malesuada purus eu libero facilisis, vitae suscipit ligula mattis. Duis nec pretium velit. Morbi sed tortor lorem. In ut sapien et mauris commodo convallis auctor quis eros. Duis eget tincidunt urna, ac tincidunt massa. Praesent rhoncus velit eget mauris molestie, vitae semper massa ultricies. Nam ut massa purus. Pellentesque ligula nisi, consectetur eu nisi sodales, tempus consectetur elit. Ut sagittis posuere dolor, convallis semper tortor tempus eget. Fusce fermentum hendrerit porttitor."+
+
+                    "Morbi non arcu quis est mollis mollis non pellentesque purus. Donec ultricies tincidunt nisl, nec sagittis nunc tristique ut. Nullam dignissim ante in eros lacinia cursus. Aenean auctor semper nisi sit amet elementum. Sed turpis lorem, placerat in nibh et, pharetra lobortis mi. Pellentesque posuere convallis lorem, sit amet viverra sapien. Mauris porttitor quam eget arcu semper ultrices. Aliquam risus massa, aliquet vitae porttitor in, adipiscing et est. Maecenas pretium sem id sapien ornare, in sollicitudin est malesuada. Nunc massa elit, venenatis eu sollicitudin in, congue non velit. Nunc vel mauris arcu. Ut pulvinar odio dapibus placerat tincidunt. Quisque pellentesque orci risus, et aliquet lacus adipiscing in."+
+
+            "Aliquam placerat ultricies neque, a ultricies elit vulputate non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut adipiscing, urna in fermentum aliquet, sapien sem dictum diam, eu lobortis urna tortor vitae lacus. Etiam porta, velit molestie sodales hendrerit, urna augue condimentum erat, sit amet imperdiet libero risus ornare purus. Aenean nec est nisi. Aliquam id viverra arcu. Nunc tempus malesuada est, a iaculis diam rutrum sed. Nulla facilisi. Phasellus iaculis est tortor, a suscipit sem fermentum et."+
+
+                    "Etiam luctus lectus quis nisl semper suscipit. Vestibulum eget pretium nibh. Morbi cursus sem id dolor sagittis, eget gravida odio cursus. Nunc dui dolor, porta nec pretium ut, eleifend non turpis. Vivamus ac leo elit. Suspendisse ac risus et libero bibendum mattis dignissim et diam. Phasellus ac libero eget neque dapibus varius vitae ac lorem. Nam eleifend dignissim tellus quis ultrices. Nam tincidunt risus eu sapien euismod pulvinar. Phasellus accumsan, dolor vitae rhoncus vestibulum, leo justo hendrerit erat, ac adipiscing nulla ante non turpis. Ut consectetur pulvinar nibh, eu lobortis ligula.";
+            throw new Error(msg);
+        };
+
+        $("#btn").click(function(){
+           window.errorGenerator = generator;
+           setInterval(function(){window.errorGenerator();}, 100);
+        });
+
+        $("#btnStop").click(function(){
+            window.errorGenerator = function(){};
+        });
+    })
+
+
+
+
+</script>
+
+
