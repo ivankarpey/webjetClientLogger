@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="clientinfologger" default="all">
+  
+  
+  <property file="clientinfologger.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.java_ee_6-java_ee_6.classpath">
+    <pathelement location="${basedir}/WEB-INF/lib/disruptor-3.2.0.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.annotation.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.ejb.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.jms.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.persistence.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.resource.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.servlet.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.servlet.jsp.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.servlet.jsp.jstl.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/javax.transaction.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/log4j-api-2.0-beta9.jar"/>
+    <pathelement location="${basedir}/WEB-INF/lib/log4j-core-2.0-beta9.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm.jar"/>
+    <pathelement location="${javac2.home}/asm-commons.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module ClientInfoLogger -->
+  
+  <dirname property="module.clientinfologger.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.clientinfologger" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.clientinfologger" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.clientinfologger" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.clientinfologger" value="${compiler.args}"/>
+  
+  <property name="clientinfologger.output.dir" value="${module.clientinfologger.basedir}/out/production/ClientInfoLogger"/>
+  <property name="clientinfologger.testoutput.dir" value="${module.clientinfologger.basedir}/out/test/ClientInfoLogger"/>
+  
+  <path id="clientinfologger.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="clientinfologger.module.production.classpath">
+    <path refid="${module.jdk.classpath.clientinfologger}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  <path id="clientinfologger.runtime.production.module.classpath">
+    <pathelement location="${clientinfologger.output.dir}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  <path id="clientinfologger.module.classpath">
+    <path refid="${module.jdk.classpath.clientinfologger}"/>
+    <pathelement location="${clientinfologger.output.dir}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  <path id="clientinfologger.runtime.module.classpath">
+    <pathelement location="${clientinfologger.testoutput.dir}"/>
+    <pathelement location="${clientinfologger.output.dir}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.clientinfologger">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.clientinfologger">
+    <patternset refid="excluded.from.module.clientinfologger"/>
+  </patternset>
+  
+  <path id="clientinfologger.module.sourcepath">
+    <dirset dir="${module.clientinfologger.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.clientinfologger" depends="compile.module.clientinfologger.production,compile.module.clientinfologger.tests" description="Compile module ClientInfoLogger"/>
+  
+  <target name="compile.module.clientinfologger.production" depends="register.custom.compilers" description="Compile module ClientInfoLogger; production classes">
+    <mkdir dir="${clientinfologger.output.dir}"/>
+    <javac2 destdir="${clientinfologger.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.clientinfologger}/javac">
+      <compilerarg line="${compiler.args.clientinfologger}"/>
+      <bootclasspath refid="clientinfologger.module.bootclasspath"/>
+      <classpath refid="clientinfologger.module.production.classpath"/>
+      <src refid="clientinfologger.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.clientinfologger"/>
+    </javac2>
+    
+    <copy todir="${clientinfologger.output.dir}">
+      <fileset dir="${module.clientinfologger.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.clientinfologger.tests" depends="register.custom.compilers,compile.module.clientinfologger.production" description="compile module ClientInfoLogger; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.clientinfologger" description="cleanup module">
+    <delete dir="${clientinfologger.output.dir}"/>
+    <delete dir="${clientinfologger.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.clientinfologger, clean.artifact.clientinfologger:war_exploded" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.clientinfologger" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.clientinfologger:war_exploded" value="${basedir}/out/artifacts/ClientInfoLogger_war_exploded"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="clean.artifact.clientinfologger:war_exploded" description="clean ClientInfoLogger:war exploded artifact output">
+    <delete dir="${artifact.output.clientinfologger:war_exploded}"/>
+  </target>
+  
+  <target name="artifact.clientinfologger:war_exploded" depends="init.artifacts, compile.module.clientinfologger" description="Build &#39;ClientInfoLogger:war exploded&#39; artifact">
+    <mkdir dir="${artifact.output.clientinfologger:war_exploded}"/>
+    <mkdir dir="${artifact.output.clientinfologger:war_exploded}/WEB-INF"/>
+    <mkdir dir="${artifact.output.clientinfologger:war_exploded}/WEB-INF/classes"/>
+    <copy todir="${artifact.output.clientinfologger:war_exploded}/WEB-INF/classes">
+      <fileset dir="${clientinfologger.output.dir}"/>
+    </copy>
+    <copy todir="${artifact.output.clientinfologger:war_exploded}">
+      <fileset dir="${basedir}"/>
+    </copy>
+    <mkdir dir="${artifact.output.clientinfologger:war_exploded}/WEB-INF"/>
+    <copy file="${basedir}/WEB-INF/web.xml" tofile="${artifact.output.clientinfologger:war_exploded}/WEB-INF/web.xml"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.clientinfologger:war_exploded" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
